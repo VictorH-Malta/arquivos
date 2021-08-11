@@ -7,23 +7,22 @@ namespace Arquivos
     {
         static void Main(string[] args)
         {
-            string path = @"C:\Users\victorhmalta\source\repos\filex.txt";
+            string path = @"C:\Users\victorhmalta\source\repos\file1.txt";
 
             try
             {
                 //O bloco using permite que se termine automaticamente a execução de um objeto IDisposable: Font, FileStream, StreamReader, StreamWriter...
-                using (FileStream fs = new FileStream(path, FileMode.Open))
+
+                //É possível fazer em cascata e instanciar logo no início da execução
+                using (StreamReader sr = File.OpenText(path))
                 {
-                    //É possível fazer em cascata e instanciar logo no início da execução
-                    using (StreamReader sr = new StreamReader(fs))
+                    while (!sr.EndOfStream)
                     {
-                        while (!sr.EndOfStream)
-                        {
-                            string line = sr.ReadLine();
-                            Console.WriteLine(line);
-                        }
+                        string line = sr.ReadLine();
+                        Console.WriteLine(line);
                     }
                 }
+
             }
             catch (IOException e)
             {

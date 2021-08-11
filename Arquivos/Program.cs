@@ -8,34 +8,16 @@ namespace Arquivos
     {
         static void Main(string[] args)
         {
-            string path = @"C:\Users\victorhmalta\source\repos\myfolder";
+            string path = @"C:\Users\victorhmalta\source\repos\file1.txt";
 
-            try
-            {
-                //Cria um diretório no caminho indicado, podendo ser concatenado com path
-                Directory.CreateDirectory(path + @"\newfolder");
-
-                //Os métodos de enumeração de diretórios e arquivos são do tipo IEnumerable, uma coleção diferente em System.Collections.Generic
-                IEnumerable<string> folders =  Directory.EnumerateDirectories(path, "*.*", SearchOption.AllDirectories);//A máscara "*.*" pega todos os nomes e tipos
-                Console.WriteLine("FOLDERS: ");
-                foreach (string folder in folders)
-                {
-                    Console.WriteLine(folder);
-                }
-
-                //Mesma coisa só que com arquivos
-                IEnumerable<string> files = Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories);
-                Console.WriteLine("FILES: ");
-                foreach (string file in files)
-                {
-                    Console.WriteLine(file);
-                }
-            }
-            catch (IOException e)
-            {
-                Console.WriteLine("An error occurred!");
-                Console.WriteLine(e.Message);
-            }
+            Console.WriteLine("DirectorySeparatorChar: " + Path.DirectorySeparatorChar);
+            Console.WriteLine("PathSeparator: " + Path.PathSeparator);
+            Console.WriteLine("GetDirectoryName: "+ Path.GetDirectoryName(path));//Pega somente o caminho até a ultima pasta encontrada.
+            Console.WriteLine("GetFileName: " + Path.GetFileName(path));
+            Console.WriteLine("GetExtension: " + Path.GetExtension(path));
+            Console.WriteLine("GetFileNameWithoutExtension: " + Path.GetFileNameWithoutExtension(path));
+            Console.WriteLine("GetFullPath: " + Path.GetFullPath(path));
+            Console.WriteLine("GetTempPath: " + Path.GetTempPath());
         }
     }
 }

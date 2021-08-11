@@ -7,24 +7,27 @@ namespace Arquivos
     {
         static void Main(string[] args)
         {
-            /**/
-            string sourcePath = @"C:\Users\victorhmalta\source\repos\file1.txt";
-            string targetPath = @"C:\Users\victorhmalta\source\repos\file2.txt";
+            string path = @"C:\Users\victorhmalta\source\repos\file1.txt";
+            FileStream fs = null;
+            StreamReader sr = null;
 
             try
             {
-                FileInfo fileInfo = new FileInfo(sourcePath);//Instancia um objeto FileInfo
-                fileInfo.CopyTo(targetPath);//Pega o conteúdo e copia pro caminho indicado
-                string[] lines = File.ReadAllLines(targetPath);
-                foreach (string line in lines)
-                {
-                    Console.WriteLine(line);
-                }
+                fs = new FileStream(path, FileMode.Open); //Abre o caminho fornecido
+                sr = new StreamReader(fs); //Lê o conteúdo
+                string line = sr.ReadLine(); //Lê uma linha e armazena na variável
+                Console.WriteLine(line); //Imprime a variável na tela
             }
             catch (IOException e)
             {
-                Console.WriteLine("An error occured!");
+                Console.WriteLine("An error occurred!");
                 Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                //É necessário fechar o arquivo manualmente por enquanto!
+                if (fs != null) fs.Close();
+                if (sr != null) sr.Close();
             }
         }
     }

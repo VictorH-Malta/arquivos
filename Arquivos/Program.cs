@@ -7,19 +7,21 @@ namespace Arquivos
     {
         static void Main(string[] args)
         {
-            string path = @"C:\Users\victorhmalta\source\repos\file1.txt";
+            string sourcePath = @"C:\Users\victorhmalta\source\repos\file1.txt";
+            string targetPath = @"C:\Users\victorhmalta\source\repos\file2.txt";
 
             try
             {
-                //O bloco using permite que se termine automaticamente a execução de um objeto IDisposable: Font, FileStream, StreamReader, StreamWriter...
+                //Lê as linhas e guarda o conteúdo no vetor string[] lines
+                string[] lines = File.ReadAllLines(sourcePath);
 
-                //É possível fazer em cascata e instanciar logo no início da execução
-                using (StreamReader sr = File.OpenText(path))
+                //Instanciando uma variável StreamWriter e já escrevendo com o método AppendText()
+                using (StreamWriter sw = File.AppendText(targetPath))
                 {
-                    while (!sr.EndOfStream)
+                    foreach (string line in lines)
                     {
-                        string line = sr.ReadLine();
-                        Console.WriteLine(line);
+                        //Escreve no arquivo todo o conteúdo em LETRA MAIÚSCULA
+                        sw.WriteLine(line.ToUpper());
                     }
                 }
 

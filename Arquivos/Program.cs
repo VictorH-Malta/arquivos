@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 
 namespace Arquivos
 {
@@ -7,24 +8,28 @@ namespace Arquivos
     {
         static void Main(string[] args)
         {
-            string sourcePath = @"C:\Users\victorhmalta\source\repos\file1.txt";
-            string targetPath = @"C:\Users\victorhmalta\source\repos\file2.txt";
+            string path = @"C:\Users\victorhmalta\source\repos\myfolder";
 
             try
             {
-                //Lê as linhas e guarda o conteúdo no vetor string[] lines
-                string[] lines = File.ReadAllLines(sourcePath);
+                //Cria um diretório no caminho indicado, podendo ser concatenado com path
+                Directory.CreateDirectory(path + @"\newfolder");
 
-                //Instanciando uma variável StreamWriter e já escrevendo com o método AppendText()
-                using (StreamWriter sw = File.AppendText(targetPath))
+                //Os métodos de enumeração de diretórios e arquivos são do tipo IEnumerable, uma coleção diferente em System.Collections.Generic
+                IEnumerable<string> folders =  Directory.EnumerateDirectories(path, "*.*", SearchOption.AllDirectories);//A máscara "*.*" pega todos os nomes e tipos
+                Console.WriteLine("FOLDERS: ");
+                foreach (string folder in folders)
                 {
-                    foreach (string line in lines)
-                    {
-                        //Escreve no arquivo todo o conteúdo em LETRA MAIÚSCULA
-                        sw.WriteLine(line.ToUpper());
-                    }
+                    Console.WriteLine(folder);
                 }
 
+                //Mesma coisa só que com arquivos
+                IEnumerable<string> files = Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories);
+                Console.WriteLine("FILES: ");
+                foreach (string file in files)
+                {
+                    Console.WriteLine(file);
+                }
             }
             catch (IOException e)
             {
